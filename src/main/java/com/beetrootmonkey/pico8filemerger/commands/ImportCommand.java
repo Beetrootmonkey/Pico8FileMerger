@@ -25,7 +25,12 @@ public class ImportCommand implements Command {
                 return Arrays.asList(line);
             }
 
-            File file = new File(path + args[0] + ".p8");
+            File file = new File(path + File.separator + args[0] + ".p8");
+            
+            if(!file.exists()) {
+                
+            System.out.println(String.format("Unable to find or read import file \"%s\"", file));
+            }
 
             List<String> lines = FileUtils.readLines(file);
             lines.add(0, "--" + line);
