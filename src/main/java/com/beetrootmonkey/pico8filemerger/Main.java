@@ -47,9 +47,26 @@ public class Main {
             output = input;
             LOGGER.info(String.format("Using same path as output path: \"%s\"", output));
         }
+        
+        File inputDir = new File(input);
+        if (!inputDir.exists() || !inputDir.isDirectory()) {
+            LOGGER.error("Input directory not found!");
+            return;
+        }
+        
+        File outputDir = new File(output);
+        if (!outputDir.exists()) {
+            outputDir.mkdir();
+            LOGGER.info("Missing output directory -> creating!");
+        }
+        
+        if (!inputDir.exists() || !inputDir.isDirectory()) {
+            LOGGER.error("Unable to find output directory!");
+            return;
+        }
 
         while (true) {
-            File[] directories = new File(input).listFiles();
+            File[] directories = inputDir.listFiles();
             for (File f : directories) {
                 if (f.isDirectory()) {
                     boolean success = mergeFiles(f.getAbsolutePath(), output);
