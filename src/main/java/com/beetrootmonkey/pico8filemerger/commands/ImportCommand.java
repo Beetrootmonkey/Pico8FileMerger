@@ -34,7 +34,6 @@ public class ImportCommand implements Command {
 
             List<String> lines = FileUtils.readLines(file);
             lines.add(0, "--" + line);
-            lines.add("");
             return lines;
         } catch (IOException ex) {
             LOGGER.error(ex);
