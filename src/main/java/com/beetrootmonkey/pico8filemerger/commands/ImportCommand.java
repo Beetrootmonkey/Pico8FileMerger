@@ -1,19 +1,20 @@
 package com.beetrootmonkey.pico8filemerger.commands;
 
+import com.beetrootmonkey.pico8filemerger.Main;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author na
  */
 public class ImportCommand implements Command {
+    private final static Logger LOGGER = Logger.getLogger(ImportCommand.class);
 
     private String[] args;
     private String path;
@@ -26,10 +27,9 @@ public class ImportCommand implements Command {
             }
 
             File file = new File(path + File.separator + args[0] + ".p8");
-            
-            if(!file.exists()) {
-                
-            System.out.println(String.format("Unable to find or read import file \"%s\"", file));
+
+            if (!file.exists()) {
+                LOGGER.error(String.format("Unable to find or read import file \"%s\"", file));
             }
 
             List<String> lines = FileUtils.readLines(file);
@@ -37,7 +37,7 @@ public class ImportCommand implements Command {
             lines.add("");
             return lines;
         } catch (IOException ex) {
-            Logger.getLogger(ImportCommand.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex);
         }
 
         return Arrays.asList(line);
